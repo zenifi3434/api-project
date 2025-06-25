@@ -23,8 +23,11 @@ class UpdateTask(BaseModel):
 
 
 app = FastAPI()
-
 all_tasks = {}
+
+def get_db():
+    return all_tasks
+
 
 @app.post("/create-task/{id}")          #create
 def create_task(id: int,task: Task):
@@ -34,12 +37,12 @@ def create_task(id: int,task: Task):
     return task
 
 @app.get("/get-all-tasks")          #read
-def get_task():
-    return all_tasks
+def get_task(db = Depends(get_db)):                 #get_db is function that provides dictonary #
+    return db                                   #Depends - tells api to call get_db function and supply us w dictonary automatically
 
 @app.get("/get-task/{id}")          #read
-def get_task(id:int):
-    return all_tasks[id]
+def get_task(id:int, db = Depends(get_db)):
+    return db[id]
 
 @app.put("/update-task/{id}")
 def update_task(id:int, task : UpdateTask):
