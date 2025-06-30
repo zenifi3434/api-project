@@ -5,4 +5,4 @@ app = FastAPI()
 
 @app.get("/")
 def hi():
-    return{"Hello":"From Docker"}
+    return{"Hello":"From Docke"}
